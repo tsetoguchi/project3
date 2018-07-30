@@ -1,0 +1,31 @@
+{% extends "orders/layout.html" %}
+
+{% block title %}
+Pinocchio’s Pizza & Subs
+{% endblock %}
+
+{% block body %}
+<div id="box">
+  <h1>Menu</h1>
+  <div id="menu">
+      <table id="tableMenu" class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Size</th>
+            <th scope="col">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for Pizza in Pizza %}
+              <tr>
+                  <td>{{ Pizza.type }}</td>
+                  <td>{{ Pizza.size }}</td>
+                  <td>${{ Pizza.price }}</td>
+              </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+</div>
+{% endblock %}
