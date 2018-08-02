@@ -7,9 +7,10 @@ class Pizza(models.Model):
     price = models.DecimalField(max_digits = 6, decimal_places=2)
     size = models.CharField(max_length = 5)
     type = models.CharField(max_length = 64)
+    dish = models.CharField(max_length = 64, default='')
 
     def __str__(self):
-        return f"{self.size} {self.type} Pizza - ${self.price}"
+        return f"{self.size} {self.type} {self.dish} Pizza - ${self.price}"
 
 class Sub(models.Model):
     price = models.DecimalField(max_digits = 6, decimal_places=2)

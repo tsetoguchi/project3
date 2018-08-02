@@ -32,15 +32,6 @@ def successfulRegister(request):
             return render(request, "orders/successfulRegister.html")
     else:
         return render(request, "orders/unsuccessfulRegister.html")
-        # username = (request.POST["username"])
-        # password = (request.POST["password"])
-        # try:
-        #     user = User.objects.get(username = username)
-        # except user.DoesNotExist:
-        #     user = User.objects.create_user(username = username, password = password)
-        #     return render(request, "orders/successfulRegister.html")
-        # return render(request, "orders/unsuccessfulRegister.html")
-
 
 def unsuccessfulRegister(request):
 
@@ -72,15 +63,18 @@ def unsuccessfulLogin(request):
     return render(request, "orders/unsuccessfulLogin.html")
 
 def menu(request):
-
+    print('**************************')
     if request.POST.get("addCart"):
         username = None
         if request.user.is_authenticated():
-            username = request.user.username
-            cart = Cart(owner = username)
+            username = 'tao'
+            items = 'asdasd'
+            print('**************************')
+            # username = request.user.username
+            cart = Cart(owner = username, items = items)
 
     context = {
-        "Menu": Menu.objects.all()
+        "Menu": Options.objects.all()
     }
     return render(request, "orders/menu.html", context)
 

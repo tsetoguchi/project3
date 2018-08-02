@@ -7,26 +7,35 @@ Pinocchio’s Pizza & Subs
 {% block body %}
 <div id="box">
   <h1>Menu</h1>
+  <h1>{{ Menu.objects.pizza }}</h1>
+  <h2>Pizzas</h2>
   <div id="menu">
       <table id="tableMenu" class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">Item</th>
+            <th scope="col">Type</th>
+            <th scope="col">Size</th>
+            <th scope="col">Price</th>
             <th scope="col">&#128722</th>
           </tr>
         </thead>
         <tbody>
           {% for item in Menu %}
-            {% if item is not None %}
               <tr>
-                  <td>{{ item }}</td>
+                  <td>{{ item.pizza.dish }} {{ item.pizza.type }}</td>
+                  <td>{{ item.pizza.size }}</td>
+                  <td>${{ item.pizza.price }}</td>
                   <td>
-                    <button type="button" name="addCart" class="btn btn-outline-primary">
-                      Add to Cart
-                    </button>
+                    <form method='post' action=action="{% url 'menu' %}">
+                      {% csrf_token %}
+                      <button type="submit" name="addCart" class="btn btn-outline-primary">
+                        <!--<a href="{% url 'menu' %}" class="btn btn-default">-->
+                          Add to Cart
+                        <!--</a>-->
+                      </button>
+                    </form>
                   </td>
               </tr>
-            {% endif %}
           {% endfor %}
         </tbody>
       </table>
