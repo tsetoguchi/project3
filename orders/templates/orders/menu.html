@@ -17,9 +17,9 @@ Pinocchio’s Pizza & Subs
           </tr>
         </thead>
         <tbody>
-          {% for Pizza in Pizza %}
+          {% for item in Menu %}
               <tr>
-                  <td>{{ Pizza.type }}</td>
+                  <td>{{ Menu.Pizza }}</td>
                   <td>{{ Pizza.size }}</td>
                   <td>${{ Pizza.price }}</td>
               </tr>

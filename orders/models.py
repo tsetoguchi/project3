@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 # Create your models here.
 
@@ -8,7 +9,7 @@ class Pizza(models.Model):
     type = models.CharField(max_length = 64)
 
     def __str__(self):
-        return f"A {self.size} {self.type} pizza is ${self.price}"
+        return f"{self.size} {self.type} Pizza - ${self.price}"
 
 class Topping(models.Model):
     name = models.CharField(max_length = 64)
@@ -20,9 +21,18 @@ class Sub(models.Model):
     type = models.CharField(max_length = 64)
 
     def __str__(self):
-        return f"A {self.size} {self.type} sub is ${self.price}"
+        return f"{self.size} {self.type} Sub - ${self.price}"
+
+class Options(models.Model):
+    pizza = models.ForeignKey(Pizza, on_delete = models.CASCADE, blank = True, null = True)
+    topping = models.ForeignKey(Topping, on_delete = models.CASCADE, blank = True, null = True)
+    sub = models.ForeignKey(Sub, on_delete = models.CASCADE, blank = True, null = True)
+
+    def __str__(self):
+        return f"{self.pizza}"
 
 class Menu(models.Model):
-    pizzas = models.ForeignKey(Pizza, on_delete = models.CASCADE, related_name="pizzas")
-    subs = models.ForeignKey(Sub, on_delete = models.CASCADE, related_name="subs")
-    toppings = models.ForeignKey(Topping, on_delete = models.CASCADE, related_name="toppings")
+    item = models.ForeignKey(Options, on_delete = models.CASCADE, blank = True)
+
+class Cart(models.Model):
+    owner = models.CharField(max_length = 5)
