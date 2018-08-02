@@ -11,18 +11,22 @@ Pinocchio’s Pizza & Subs
       <table id="tableMenu" class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">Type</th>
-            <th scope="col">Size</th>
-            <th scope="col">Price</th>
+            <th scope="col">Item</th>
+            <th scope="col">&#128722</th>
           </tr>
         </thead>
         <tbody>
           {% for item in Menu %}
+            {% if item is not None %}
               <tr>
-                  <td>{{ Menu.Pizza }}</td>
-                  <td>{{ Pizza.size }}</td>
-                  <td>${{ Pizza.price }}</td>
+                  <td>{{ item }}</td>
+                  <td>
+                    <button type="button" name="addCart" class="btn btn-outline-primary">
+                      Add to Cart
+                    </button>
+                  </td>
               </tr>
+            {% endif %}
           {% endfor %}
         </tbody>
       </table>

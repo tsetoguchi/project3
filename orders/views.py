@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django import forms
 
 from .models import Pizza, Topping, Sub, Menu, Cart, Options
 
@@ -23,16 +24,23 @@ def successfulRegister(request):
 
     # Register user into database
     if request.method == "POST":
-        username = (request.POST["username"])
-        # email = (request.POST["email"])
-        password = (request.POST["password"])
-        user = User.objects.get(username=username)
-        print(user)
-        print('*******************')
-        if user.DoesNotExist:
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            username = (request.POST["username"])
+            password = (request.POST["password"])
             user = User.objects.create_user(username = username, password = password)
             return render(request, "orders/successfulRegister.html")
+    else:
         return render(request, "orders/unsuccessfulRegister.html")
+        # username = (request.POST["username"])
+        # password = (request.POST["password"])
+        # try:
+        #     user = User.objects.get(username = username)
+        # except user.DoesNotExist:
+        #     user = User.objects.create_user(username = username, password = password)
+        #     return render(request, "orders/successfulRegister.html")
+        # return render(request, "orders/unsuccessfulRegister.html")
+
 
 def unsuccessfulRegister(request):
 
@@ -45,9 +53,9 @@ def loginPage(request):
 def successfulLogin(request):
     # Register user into database
     if request.method == "POST":
-        email = (request.POST["email"])
+        username = (request.POST["username"])
         password = (request.POST["password"])
-        user = authenticate(password = password, email = email)
+        user = authenticate(password = password, username = username)
         # exists = User.objects.get(email = '{email}')
         # if exists is None:
         #     return render(request, "orders/unsuccessfulLogin.html")
@@ -64,9 +72,15 @@ def unsuccessfulLogin(request):
     return render(request, "orders/unsuccessfulLogin.html")
 
 def menu(request):
+
+    if request.POST.get("addCart"):
+        username = None
+        if request.user.is_authenticated():
+            username = request.user.username
+            cart = Cart(owner = username)
+
     context = {
-        "Pizza": Pizza.objects.all(),
-        "Menu": Pizza.toppings.all()
+        "Menu": Menu.objects.all()
     }
     return render(request, "orders/menu.html", context)
 
